@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:03:32 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/08 21:30:13 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/10 22:40:34 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_rm_list	*room_lstnew(char **split)
 	new->y = ft_atoi(split[2]);
 	new->h = hash(split[1]);
 	new->next = NULL;
+	new->link = NULL;
 	return (new);
 }
 
@@ -89,6 +90,7 @@ void	room_lst_push_back(t_rm_list **begin_list, t_rm_list *new, t_info *info)
 			ptr->next = new;
 		}
 	}
+	put_room_to_table(info->table, new);
 }
 
 void	room_add_lst(t_rm_list **begin, t_rm_list *new)

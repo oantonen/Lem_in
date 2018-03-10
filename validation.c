@@ -6,23 +6,24 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:59:53 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/09 18:05:34 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/10 22:40:11 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hlemin.h"
 
-int		put_links(t_info *info, char *n1, char *n2, t_rm_list **table)
+int		put_links(t_rm_list **table, t_rm_list *r1, t_rm_list *r2)
 {
-	t_rm_list	*ptr;
-	t_rm_list	*ptr2;
+	// t_rm_list	*ptr;
+	// t_rm_list	*ptr2;
 
-	ptr = info->rooms;
-	ptr2 = info->rooms;
-	while ()
+	// ptr = table[r1->h];
+	// ptr2 = table[r2->h];
+
+
 }
 
-int		check_links(t_info *info, char *str, int h1, int h2)
+int		check_links(t_info *info, char *str, t_rm_list *r1, t_rm_list *r2)
 {
 	char		**split;
 	t_rm_list	*ptr;
@@ -36,16 +37,16 @@ int		check_links(t_info *info, char *str, int h1, int h2)
 		while (ptr)
 		{
 			if (ft_strequ(ptr->name, split[0]))
-				h1 = ptr->h;
+				r1 = ptr;
 			if (ft_strequ(ptr->name, split[1]))
-				h2 = ptr->h;
+				r2 = ptr;
 			ptr = ptr->next;
 		}
-	if (!h1)
+	if (!r1)
 		error_mng(info, ROOM_NOT_FOUND, split[0]);
-	if (!h2)
+	if (!r2)
 		error_mng(info, ROOM_NOT_FOUND, split[1]);
-	put_links(info, split[0], split[1], info->table);
+	put_links(info->table, r1, r2);
 	return (1);
 }
 
@@ -80,7 +81,7 @@ int		check_line(t_info *info, char *str)
 		error_mng(info, INVALID_LINK, "");
 	else if (!info->only_links && !ft_strchr(str, '-') && room_check(info, str))
 		return (1);
-	else if (ft_strchr(str, '-') && check_links(info, str, 0, 0))
+	else if (ft_strchr(str, '-') && check_links(info, str, info->r1, info->r2))
 		return (1);
 	
 	return (0);

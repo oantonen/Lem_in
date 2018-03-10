@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 11:57:13 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/09 18:01:05 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/10 14:43:33 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct			s_rm_list
 	int					y;
 	int					h;
 	struct s_rm_list	*next;
+	struct s_rm_list	*link;
 }						t_rm_list;
 
 typedef struct			s_struct
@@ -45,6 +46,8 @@ typedef struct			s_struct
 
 	t_rm_list			*start;
 	t_rm_list			*end;
+	t_rm_list			*r1;
+	t_rm_list			*r2;
 	t_rm_list			*rooms;
 	t_rm_list			**table;
 	t_type				e_errors;
@@ -53,7 +56,7 @@ typedef struct			s_struct
 
 # define START "##start"
 # define END "##end"
-# define INITIALIZE (t_info){0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL}
+# define INITIALIZE (t_info){0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL}
 
 int		check_line(t_info *info, char *str);
 int		error_mng(t_info *info, int err_nb, char *s);
@@ -68,5 +71,6 @@ int		end_check(t_info *info);
 int		start_check(t_info *info);
 int		assign_start_end(t_info *info, char *str);
 int		hashcheck(t_info *info, char *str);
+void	put_room_to_table(t_info *info, t_rm_list **table, t_rm_list *new);
 
 #endif

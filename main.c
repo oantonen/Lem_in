@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 20:04:37 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/09 17:30:23 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/10 22:40:38 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,20 @@ int		error_mng(t_info *info, int err_nb, char *s)
 	return (0);
 }
 
-void	put_room_to_table(t_info *info, char **split)
+void	put_room_to_table(t_rm_list **table, t_rm_list *new)
 {
 	unsigned int i;
 
-	i = hash(split[1]);
-	if (info->table[i] && ft_strequ(info->table[i]->name, split[1]))
-		error_mng(info, DUPLICATED_ROOM, "");
+	i = new->h;
 
-	if (info->table[i] == NULL)
-		info->table[i] = room_lstnew(split);
-	else
-		room_add_lst(&(info->table[i]), room_lstnew(split));
+	if (!table[i])
+		table[i] = new;
+	else if (table[i])
+	{
+		while(table[i]->link)
+			table[i] = table[i]->link;
+		table[i]->link = new;
+	}
 }
 
 
