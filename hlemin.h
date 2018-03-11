@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 11:57:13 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/11 17:09:08 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/11 20:23:51 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,5 @@ bool	assign_start_end(t_info *info, char *str);
 bool	hashcheck(t_info *info, char *str);
 void	put_room_to_table(t_rm_list **table, t_rm_list *new);
 t_data	*create_data(char **split);
-void	room_add_link(t_data **begin, t_data *new);
 
 #endif

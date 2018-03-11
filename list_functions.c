@@ -6,31 +6,11 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:03:32 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/11 17:12:14 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/11 23:19:38 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hlemin.h"
-
-// t_list	*li_lstnew(char *first)
-// {
-// 	t_list	*new;
-
-// 	if (!(new = (t_list*)malloc(sizeof(t_list))))
-// 		return (NULL);
-// 	new->content = first;
-// 	new->next = NULL;
-// 	return (new);
-// }
-
-void	room_add_link(t_data **begin, t_data *new)
-{
-	if (begin && new)
-	{
-		new->link = *begin;
-		*begin = new;
-	}
-}
 
 t_data	*create_data(char **split)
 {
@@ -40,7 +20,7 @@ t_data	*create_data(char **split)
 	data->name = split[0];
 	data->x = ft_atoi(split[1]);
 	data->y = ft_atoi(split[2]);
-	data->h = hash(split[1]);
+	data->h = hash(split[0]);
 	data->link = NULL;
 	return (data);
 }
@@ -102,7 +82,6 @@ void	room_lst_push_back(t_rm_list **begin_list, t_rm_list *new, t_info *info)
 			room_check2(info, ptr->d, new->d);
 			while (ptr->next != NULL)
 			{
-				// dprintf(2, "push_back=%s\n", ptr->name);
 				room_check2(info, ptr->d, new->d);
 				ptr = ptr->next;
 			}
@@ -110,13 +89,4 @@ void	room_lst_push_back(t_rm_list **begin_list, t_rm_list *new, t_info *info)
 		}
 	}
 	put_room_to_table(info->table, new);
-}
-
-void	room_add_lst(t_rm_list **begin, t_rm_list *new)
-{
-	if (begin && new)
-	{
-		new->next = *begin;
-		*begin = new;
-	}
 }

@@ -6,36 +6,47 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:59:53 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/11 18:04:10 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/11 23:18:10 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hlemin.h"
 
-int		put_links(t_rm_list **table, t_rm_list *r1, t_rm_list *r2) //занулить r1, r2
+int		put_links(t_rm_list **table, t_rm_list *r1, t_rm_list *r2)
 {
 	t_rm_list	*ptr;
 	t_rm_list	*ptr2;
 	t_list 		*new;
 
-	new = ft_lst_new(ptr2->d, 0);
 	ptr = table[r1->d->h];
 	ptr2 = table[r2->d->h];
+	new = ft_lstnew(ptr2->d, 0);
 	if (ptr->same_h == NULL)
+		ft_lstadd(&ptr->d->link, new);	
+	else
 	{
-		// ptr2->d->link = *(ptr->d);
-		// *(ptr->d) = ptr2->d;
-		room_add_link(&(ptr->d), );
+		while (ptr->same_h && !ft_strequ(ptr->d->name, r1->d->name))
+			ptr = ptr->same_h;
+		ft_lstadd(&ptr->d->link, new);
 	}
-	// else
-	// {
-	// 	while (ptr->same_h && !ft_strequ(ptr->d->name, r1->d->name))
-	// 		ptr = ptr->same_h;
-	// 	ptr->d->link = ptr2->d;
-	// }
-
-	
 	return (TRUE);
+}
+
+void	put_room_to_table(t_rm_list **table, t_rm_list *new)
+{
+	unsigned int i;
+
+	i = new->d->h;
+
+	if (!table[i])
+		table[i] = new;
+	else if (table[i])
+	{
+		dprintf(2, "\n------colision------\n");
+		while(table[i]->same_h)
+			table[i] = table[i]->same_h;
+		table[i]->same_h = new;
+	}
 }
 
 int		check_links(t_info *info, char *str)
@@ -49,14 +60,6 @@ int		check_links(t_info *info, char *str)
 	split = ft_strsplit(str, '-');
 	ptr = info->rooms;
 	if (split[0] && split[1])
-		// while (ptr)
-		// {
-		// 	if (ft_strequ(ptr->d->name, split[0]))
-		// 		r1 = ptr;
-		// 	if (ft_strequ(ptr->d->name, split[1]))
-		// 		r2 = ptr;
-		// 	ptr = ptr->next;
-		// }
 	{
 		info->r1 = info->table[hash(split[0])];
 		info->r2 = info->table[hash(split[1])];

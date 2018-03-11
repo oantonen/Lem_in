@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 20:04:37 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/11 17:59:48 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/11 23:18:16 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ unsigned int	hash(char *str)
 	unsigned long	code;
 
 	code = 0;
+	// dprintf(2, "str==%s\n", str);
 	while (*str)
 	{
-		code = *str + (code << 6) + (code << 10) - code;
+		code = ((*str << 2) ^ 75379) + (code << 6) + (code << 4) - code;
 		str++;
 	}
+	// dprintf(2, "code=%lu\n", code);
 	return (code & 524287);
 }
 
@@ -62,22 +64,6 @@ bool		error_mng(t_info *info, int err_nb, char *s)
 	return (FALSE);
 }
 
-void	put_room_to_table(t_rm_list **table, t_rm_list *new)
-{
-	unsigned int i;
-
-	i = new->d->h;
-
-	if (!table[i])
-		table[i] = new;
-	else if (table[i])
-	{
-		while(table[i]->same_h)
-			table[i] = table[i]->same_h;
-		table[i]->same_h = new;
-	}
-}
-
 int		main(int argc, char **argv)
 {
 	char	*first;
@@ -99,30 +85,33 @@ int		main(int argc, char **argv)
 			error_mng(&info, NOT_OK, "");
 		// ft_strdel(&first);
 	}
-	// ft_putstr("\n");
-	// while (begin)
-	// {
-	// 	ft_printf("%s\n", begin->content);
-	// 	begin = begin->next;
-	// }
-	// if (info.start)
-	// 	ft_printf("start=%s\n", info.start->d->name);
-	// if (info.end)
-	// 	ft_printf("end=%s\n", info.end->d->name);
-	while (info.rooms)
+	// find_path(&info);
+	ft_putstr("\n");
+	while (begin)
 	{
-		if (info.table[info.rooms->d->h]->d->link)
-		{
-			printf("name1=%s ->", info.table[info.rooms->d->h]->d->name);
-			while (info.table[info.rooms->d->h]->d->link)
-			{
-				printf("name2=%s\n", info.table[info.rooms->d->h]->d->link->name);
-				info.table[info.rooms->d->h]->d = info.table[info.rooms->d->h]->d->link;
-			}
-			
-		}
-		info.rooms = info.rooms->next;
+		ft_printf("%s\n", begin->content);
+		begin = begin->next;
 	}
+	if (info.start)
+		ft_printf("start=%s\n", info.start->d->name);
+	if (info.end)
+		ft_printf("end=%s\n", info.end->d->name);
+	// while (info.rooms)
+	// {
+	// 	if (info.table[info.rooms->d->h]->d->link)
+	// 	{
+	// 		printf("name1=%s ->\n", info.table[info.rooms->d->h]->d->name);
+	// 		while (info.table[info.rooms->d->h]->d->link)
+	// 		{
+	// 			printf("name2=%s\n", ((t_data*)info.table[info.rooms->d->h]->d->link->content)->name);
+	// 			info.table[info.rooms->d->h]->d->link = info.table[info.rooms->d->h]->d->link->next;
+	// 			// if (info.table[info.rooms->d->h]->d->link)
+	// 			// printf("name2=%s\n", ((t_data*)info.table[info.rooms->d->h]->d->link->content)->name);
+	// 		}
+			
+	// 	}
+	// 	info.rooms = info.rooms->next;
+	// }
 	
 	return (0);
 }
