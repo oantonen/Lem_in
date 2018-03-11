@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 16:24:36 by oantonen          #+#    #+#             */
-/*   Updated: 2018/02/17 19:06:49 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/11 18:02:09 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,7 @@ t_list	*ft_lstnew(void const *content, size_t content_size)
 	}
 	else
 	{
-		new->content = malloc(sizeof(content) * content_size);
-		if (new->content == NULL)
-		{
-			free(new);
-			return (NULL);
-		}
-		ft_memcpy((new->content), content, content_size);
+		new->content = (void*)content;
 		new->content_size = content_size;
 	}
 	new->next = NULL;

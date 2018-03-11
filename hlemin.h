@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 11:57:13 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/10 14:43:33 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/11 17:09:08 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,30 @@
 
 # include "hprintf.h"
 #include <stdio.h> ////
+# include <stdbool.h>
 
 typedef enum			e_type
 {
 	OK, DOUBLE_START, DOUBLE_END, NOT_OK, INVALID_ANTS, WRONG_ROOM_PROPERTIES, 
 	ANT_IS_MISSING, DUPLICATED_ROOM, DUPLICATED_COORDINATES, ROOM_NOT_FOUND,
-	EMPTY_LINE, START_END_MISSING, NO_START_ROOM, NO_END_ROOM, INVALID_LINK
+	EMPTY_LINE, START_END_MISSING, NO_START_ROOM, NO_END_ROOM, INVALID_LINK,
+
 }						t_type;
 
-typedef struct			s_rm_list
+typedef struct 			s_data
 {
 	char				*name;
 	int					x;
 	int					y;
 	int					h;
+	t_list				*link;
+}						t_data;
+
+typedef struct			s_rm_list
+{
+	t_data				*d;
 	struct s_rm_list	*next;
-	struct s_rm_list	*link;
+	struct s_rm_list	*same_h;
 }						t_rm_list;
 
 typedef struct			s_struct
@@ -59,18 +67,19 @@ typedef struct			s_struct
 # define INITIALIZE (t_info){0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL}
 
 int		check_line(t_info *info, char *str);
-int		error_mng(t_info *info, int err_nb, char *s);
-void	put_room_to_table(t_info *info, char **split);
-t_rm_list	*room_lstnew(char **split);
+bool		error_mng(t_info *info, int err_nb, char *s);
+t_rm_list	*room_lstnew(t_data *data);
 void	room_lst_push_back(t_rm_list **begin_list, t_rm_list *new, t_info *info);
 unsigned int	hash(char *str);
 void	li_lst_push_back(t_list **begin_list, t_list *new);
 void	room_add_lst(t_rm_list **begin, t_rm_list *new); //mybe do not need
-int		room_check(t_info *info, char *str);
-int		end_check(t_info *info);
-int		start_check(t_info *info);
-int		assign_start_end(t_info *info, char *str);
-int		hashcheck(t_info *info, char *str);
-void	put_room_to_table(t_info *info, t_rm_list **table, t_rm_list *new);
+bool	room_check(t_info *info, char *str);
+bool	end_check(t_info *info);
+bool	start_check(t_info *info);
+bool	assign_start_end(t_info *info, char *str);
+bool	hashcheck(t_info *info, char *str);
+void	put_room_to_table(t_rm_list **table, t_rm_list *new);
+t_data	*create_data(char **split);
+void	room_add_link(t_data **begin, t_data *new);
 
 #endif

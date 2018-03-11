@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:03:32 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/10 22:40:34 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/11 17:12:14 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,28 @@
 // 	new->next = NULL;
 // 	return (new);
 // }
+
+void	room_add_link(t_data **begin, t_data *new)
+{
+	if (begin && new)
+	{
+		new->link = *begin;
+		*begin = new;
+	}
+}
+
+t_data	*create_data(char **split)
+{
+	t_data	*data;
+
+	data = (t_data*)malloc(sizeof(t_data));
+	data->name = split[0];
+	data->x = ft_atoi(split[1]);
+	data->y = ft_atoi(split[2]);
+	data->h = hash(split[1]);
+	data->link = NULL;
+	return (data);
+}
 
 void	li_lst_push_back(t_list **begin_list, t_list *new)
 {
@@ -45,26 +67,23 @@ void	li_lst_push_back(t_list **begin_list, t_list *new)
 	}
 }
 
-t_rm_list	*room_lstnew(char **split)
+t_rm_list	*room_lstnew(t_data *data)
 {
 	t_rm_list	*new;
 
 	if (!(new = (t_rm_list*)malloc(sizeof(t_rm_list))))
 		return (NULL);
-	new->name = split[0];
-	new->x = ft_atoi(split[1]);
-	new->y = ft_atoi(split[2]);
-	new->h = hash(split[1]);
+	new->d = data;
 	new->next = NULL;
-	new->link = NULL;
+	new->same_h = NULL;
 	return (new);
 }
 
-void	room_check2(t_info *info, t_rm_list	*ptr, t_rm_list	*new)
+void	room_check2(t_info *info, t_data *data1, t_data	*data2)
 {
-	if (ft_strequ(ptr->name, new->name))
+	if (ft_strequ(data1->name, data2->name))
 		error_mng(info, DUPLICATED_ROOM, "");
-	if (ptr->x == new->x && ptr->y == new->y)
+	if (data1->x == data2->x && data1->y == data2->y)
 		error_mng(info, DUPLICATED_COORDINATES, "");
 }
 
@@ -80,11 +99,11 @@ void	room_lst_push_back(t_rm_list **begin_list, t_rm_list *new, t_info *info)
 		else
 		{
 			ptr = *begin_list;
-			room_check2(info, ptr, new);
+			room_check2(info, ptr->d, new->d);
 			while (ptr->next != NULL)
 			{
 				// dprintf(2, "push_back=%s\n", ptr->name);
-				room_check2(info, ptr, new);
+				room_check2(info, ptr->d, new->d);
 				ptr = ptr->next;
 			}
 			ptr->next = new;
