@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 11:57:13 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/11 20:23:51 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/13 20:43:50 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef enum			e_type
 	OK, DOUBLE_START, DOUBLE_END, NOT_OK, INVALID_ANTS, WRONG_ROOM_PROPERTIES, 
 	ANT_IS_MISSING, DUPLICATED_ROOM, DUPLICATED_COORDINATES, ROOM_NOT_FOUND,
 	EMPTY_LINE, START_END_MISSING, NO_START_ROOM, NO_END_ROOM, INVALID_LINK,
+	NO_PATH
 
 }						t_type;
 
@@ -31,6 +32,7 @@ typedef struct 			s_data
 	int					x;
 	int					y;
 	int					h;
+	int					level;
 	t_list				*link;
 }						t_data;
 
@@ -80,5 +82,7 @@ bool	assign_start_end(t_info *info, char *str);
 bool	hashcheck(t_info *info, char *str);
 void	put_room_to_table(t_rm_list **table, t_rm_list *new);
 t_data	*create_data(char **split);
+void	bfs_path(t_info *info, t_rm_list **table);
+
 
 #endif

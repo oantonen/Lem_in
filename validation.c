@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:59:53 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/11 23:18:10 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/13 14:31:45 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,19 @@ int		put_links(t_rm_list **table, t_rm_list *r1, t_rm_list *r2)
 	ptr = table[r1->d->h];
 	ptr2 = table[r2->d->h];
 	new = ft_lstnew(ptr2->d, 0);
-	if (ptr->same_h == NULL)
-		ft_lstadd(&ptr->d->link, new);	
+	if (ptr->same_h == NULL && ptr2->same_h == NULL)
+	{
+		ft_lstadd(&(ptr->d->link), new);
+		ft_lstadd(&(ptr2->d->link), ft_lstnew(ptr->d, 0));
+	}
 	else
 	{
 		while (ptr->same_h && !ft_strequ(ptr->d->name, r1->d->name))
 			ptr = ptr->same_h;
-		ft_lstadd(&ptr->d->link, new);
+		ft_lstadd(&(ptr->d->link), new);
+		while (ptr2->same_h && !ft_strequ(ptr2->d->name, r2->d->name))
+			ptr2 = ptr2->same_h;
+		ft_lstadd(&(ptr2->d->link), ft_lstnew(ptr->d, 0));
 	}
 	return (TRUE);
 }

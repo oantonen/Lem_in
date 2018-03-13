@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 20:04:37 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/11 23:18:16 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/13 19:54:17 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ bool		error_mng(t_info *info, int err_nb, char *s)
 		ft_printf("Error: end room not found.\n", s);
 	else if (err_nb == INVALID_LINK)
 		ft_printf("Error: invalid link format.\n", s);
+	else if (err_nb == NO_PATH)
+		ft_printf("Error: there is no path at this farm.\n", s);
 	// else
 	// 	return (1);
 	//clear leaks
@@ -85,17 +87,17 @@ int		main(int argc, char **argv)
 			error_mng(&info, NOT_OK, "");
 		// ft_strdel(&first);
 	}
-	// find_path(&info);
-	ft_putstr("\n");
-	while (begin)
-	{
-		ft_printf("%s\n", begin->content);
-		begin = begin->next;
-	}
-	if (info.start)
-		ft_printf("start=%s\n", info.start->d->name);
-	if (info.end)
-		ft_printf("end=%s\n", info.end->d->name);
+	bfs_path(&info, info.table);
+	// ft_putstr("\n");
+	// while (begin)
+	// {
+	// 	ft_printf("%s\n", begin->content);
+	// 	begin = begin->next;
+	// }
+	// if (info.start)
+	// 	ft_printf("start=%s\n", info.start->d->name);
+	// if (info.end)
+	// 	ft_printf("end=%s\n", info.end->d->name);
 	// while (info.rooms)
 	// {
 	// 	if (info.table[info.rooms->d->h]->d->link)
