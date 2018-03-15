@@ -1,6 +1,7 @@
 NAME := lem-in
 
-SRC := main.c validation.c list_functions.c room_check.c find_path.c
+SRC := main.c validation.c list_functions.c room_check.c find_path.c \
+list_functions2.c
 
 LIBHEAD := libft/includes
 

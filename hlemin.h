@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 11:57:13 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/13 20:43:50 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/15 22:56:46 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct			s_struct
 	int					ants;
 	char				flag;
 	char				only_links;
+	int					path_q;
 
 	t_rm_list			*start;
 	t_rm_list			*end;
@@ -60,13 +61,14 @@ typedef struct			s_struct
 	t_rm_list			*r2;
 	t_rm_list			*rooms;
 	t_rm_list			**table;
+	t_list				**paths;
 	t_type				e_errors;
 	
 }						t_info;
 
 # define START "##start"
 # define END "##end"
-# define INITIALIZE (t_info){0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL}
+# define INITIALIZE (t_info){0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, NULL}
 
 int		check_line(t_info *info, char *str);
 bool		error_mng(t_info *info, int err_nb, char *s);
@@ -83,6 +85,7 @@ bool	hashcheck(t_info *info, char *str);
 void	put_room_to_table(t_rm_list **table, t_rm_list *new);
 t_data	*create_data(char **split);
 void	bfs_path(t_info *info, t_rm_list **table);
+void	sort_end_links(t_list **end);
 
 
 #endif
