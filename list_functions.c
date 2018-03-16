@@ -6,13 +6,13 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:03:32 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/15 19:28:47 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/16 12:12:19 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hlemin.h"
 
-t_data	*create_data(char **split)
+t_data		*create_data(char **split)
 {
 	t_data	*data;
 
@@ -26,7 +26,7 @@ t_data	*create_data(char **split)
 	return (data);
 }
 
-void	li_lst_push_back(t_list **begin_list, t_list *new)
+void		li_lst_push_back(t_list **begin_list, t_list *new)
 {
 	t_list	*ptr;
 
@@ -60,7 +60,7 @@ t_rm_list	*room_lstnew(t_data *data)
 	return (new);
 }
 
-void	room_check2(t_info *info, t_data *data1, t_data	*data2)
+void		room_check2(t_info *info, t_data *data1, t_data *data2)
 {
 	if (ft_strequ(data1->name, data2->name))
 		error_mng(info, DUPLICATED_ROOM, "");
@@ -68,18 +68,18 @@ void	room_check2(t_info *info, t_data *data1, t_data	*data2)
 		error_mng(info, DUPLICATED_COORDINATES, "");
 }
 
-void	room_lst_push_back(t_rm_list **begin_list, t_rm_list *new, t_info *info)
+void		room_lst_push_back(t_rm_list **begin, t_rm_list *new, t_info *info)
 {
 	t_rm_list	*ptr;
 
 	ptr = NULL;
-	if (begin_list)
+	if (begin)
 	{
-		if (*begin_list == NULL)
-			*begin_list = new;
+		if (*begin == NULL)
+			*begin = new;
 		else
 		{
-			ptr = *begin_list;
+			ptr = *begin;
 			room_check2(info, ptr->d, new->d);
 			while (ptr->next != NULL)
 			{
