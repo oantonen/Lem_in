@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:59:53 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/15 19:29:32 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/17 16:07:03 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		put_links(t_rm_list **table, t_rm_list *r1, t_rm_list *r2)
 {
 	t_rm_list	*ptr;
 	t_rm_list	*ptr2;
-	t_list 		*new;
+	t_list		*new;
 
 	ptr = table[r1->d->h];
 	ptr2 = table[r2->d->h];
@@ -43,13 +43,12 @@ void	put_room_to_table(t_rm_list **table, t_rm_list *new)
 	unsigned int i;
 
 	i = new->d->h;
-
 	if (!table[i])
 		table[i] = new;
 	else if (table[i])
 	{
-		dprintf(2, "\n------colision------\n");
-		while(table[i]->same_h)
+		dprintf(2, "\n------colision------\n");//
+		while (table[i]->same_h)
 			table[i] = table[i]->same_h;
 		table[i]->same_h = new;
 	}
@@ -100,7 +99,7 @@ int		check_line(t_info *info, char *str)
 	if (*str == '\0')
 		error_mng(info, EMPTY_LINE, "");
 	else if (info->isstart == 1)
-		return (assign_start_end(info ,str));
+		return (assign_start_end(info, str));
 	else if (str[0] != '#' && info->isants == 0 && ant_check(info, str))
 		return (TRUE);
 	else if (str[0] == '#' && hashcheck(info, str))
@@ -111,6 +110,5 @@ int		check_line(t_info *info, char *str)
 		return (TRUE);
 	else if (ft_strchr(str, '-') && check_links(info, str))
 		return (TRUE);
-	
 	return (FALSE);
 }

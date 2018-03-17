@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:03:32 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/16 12:12:19 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/16 14:09:46 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_data		*create_data(char **split)
 	data->name = split[0];
 	data->x = ft_atoi(split[1]);
 	data->y = ft_atoi(split[2]);
-	data->level = -1;
+	data->lvl = -1;
 	data->h = hash(split[0]);
 	data->link = NULL;
 	return (data);

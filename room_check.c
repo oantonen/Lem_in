@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 21:21:30 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/15 19:28:27 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/17 21:58:41 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,15 @@ bool		room_check(t_info *info, char *str)
 	char	**split;
 	t_data	*data;
 
-
 	split = ft_strsplit(str, ' ');
 	if (!split[0] || !split[1] || !split[2])
 		error_mng(info, WRONG_ROOM_PROPERTIES, "");
 	if (str[0] == 'L' || str[0] == ' ')
 		error_mng(info, WRONG_ROOM_PROPERTIES, "");
 	if (!ft_strequ(ft_itoa(ft_atoi(split[1])), split[1]))
-			error_mng(info, WRONG_ROOM_PROPERTIES, "");
+		error_mng(info, WRONG_ROOM_PROPERTIES, "");
 	if (!ft_strequ(ft_itoa(ft_atoi(split[2])), split[2]))
-			error_mng(info, WRONG_ROOM_PROPERTIES, "");
+		error_mng(info, WRONG_ROOM_PROPERTIES, "");
 	data = create_data(split);
 	room_lst_push_back(&(info->rooms), room_lstnew(data), info);
 	if (info->isend == 1)

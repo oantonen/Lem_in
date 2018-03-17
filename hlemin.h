@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 11:57:13 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/15 22:56:46 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/17 22:04:23 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct 			s_data
 	int					x;
 	int					y;
 	int					h;
-	int					level;
+	int					lvl;
 	t_list				*link;
 }						t_data;
 
@@ -42,6 +42,12 @@ typedef struct			s_rm_list
 	struct s_rm_list	*next;
 	struct s_rm_list	*same_h;
 }						t_rm_list;
+
+typedef struct 			s_pth
+{
+	char				*name;
+	int					ant;
+}						t_pth;
 
 typedef struct			s_struct
 {	
@@ -63,6 +69,7 @@ typedef struct			s_struct
 	t_rm_list			**table;
 	t_list				**paths;
 	t_type				e_errors;
+	int 				*pth_len;
 	
 }						t_info;
 
@@ -86,6 +93,8 @@ void	put_room_to_table(t_rm_list **table, t_rm_list *new);
 t_data	*create_data(char **split);
 void	bfs_path(t_info *info, t_rm_list **table);
 void	sort_end_links(t_list **end);
-
+// void	free_ants(t_info *info, t_list **paths);
+void	free_ants(t_info *info, t_pth **pth, int *pth_len, int ants);
+void	transform_paths(t_info *info, t_list **paths, t_pth **pth);
 
 #endif

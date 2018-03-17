@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 20:04:37 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/13 19:54:17 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/17 22:04:34 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,27 @@ bool		error_mng(t_info *info, int err_nb, char *s)
 	exit(EXIT_FAILURE);
 	return (FALSE);
 }
+void	before_start(t_info *info, t_list **begin)
+{
+	*info = INITIALIZE;
+	info->e_errors = OK;
+	info->rooms = NULL;
+	*begin = NULL;
+	info->table = (t_rm_list**)malloc(sizeof(t_rm_list*) * 524287);
+	ft_memset(info->table, 0, 524287 * sizeof(t_rm_list*));
+}
+
+void	graph_and_co(t_info *info, t_rm_list **table)
+{
+	t_pth	**pth;
+
+	bfs_path(info, info->table);
+	if (info->path_q == 0)
+		error_mng(info, NO_PATH, "");
+	transform_paths(info, info->paths, pth);
+	// free_ants(info, info->paths);
+	free_ants(info, pth, info->pth_len, info->ants);
+}
 
 int		main(int argc, char **argv)
 {
@@ -72,12 +93,7 @@ int		main(int argc, char **argv)
 	t_list	*begin;
 	t_info	info;
 
-	info = INITIALIZE;
-	info.e_errors = OK;
-	info.rooms = NULL;
-	begin = NULL;
-	info.table = (t_rm_list**)malloc(sizeof(t_rm_list*) * 524287);
-	ft_memset(info.table, 0, 524287 * sizeof(t_rm_list*));
+	before_start(&info, &begin);
 	while (get_next_line(0, &first) > 0)
 	{
 		// dprintf(2, "%s\n", first);
@@ -87,7 +103,7 @@ int		main(int argc, char **argv)
 			error_mng(&info, NOT_OK, "");
 		// ft_strdel(&first);
 	}
-	bfs_path(&info, info.table);
+	graph_and_co(&info, info.table);
 	// ft_putstr("\n");
 	// while (begin)
 	// {
