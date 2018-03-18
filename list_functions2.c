@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/15 22:27:31 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/16 14:09:52 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/18 20:01:27 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,17 @@ void	sort_end_links(t_list **end)
 			li_sort_list(&new, ptr, ptr->content_size);
 		ptr = ptr->next;
 	}
-	*end = new;
 	ptr = *end;
 	while (ptr)
 	{
-		dprintf(2, "new_sorted=%zu\n", ptr->content_size);
+		free(ptr);
 		ptr = ptr->next;
 	}
+	*end = new;
+	ptr = *end;
+	// while (ptr)
+	// {
+	// 	dprintf(2, "new_sorted=%zu\n", ptr->content_size);
+	// 	ptr = ptr->next;
+	// }
 }

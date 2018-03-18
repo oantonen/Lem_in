@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:03:32 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/16 14:09:46 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/18 21:29:47 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ t_data		*create_data(char **split)
 	t_data	*data;
 
 	data = (t_data*)malloc(sizeof(t_data));
-	data->name = split[0];
+	data->name = ft_strdup(split[0]);
 	data->x = ft_atoi(split[1]);
 	data->y = ft_atoi(split[2]);
 	data->lvl = -1;
 	data->h = hash(split[0]);
 	data->link = NULL;
+	ft_strdel(&split[0]);
+	ft_strdel(&split[1]);
+	ft_strdel(&split[2]);
+	free(split);
+	split = NULL;
 	return (data);
 }
 
@@ -52,8 +57,7 @@ t_rm_list	*room_lstnew(t_data *data)
 {
 	t_rm_list	*new;
 
-	if (!(new = (t_rm_list*)malloc(sizeof(t_rm_list))))
-		return (NULL);
+	new = (t_rm_list*)malloc(sizeof(t_rm_list));
 	new->d = data;
 	new->next = NULL;
 	new->same_h = NULL;

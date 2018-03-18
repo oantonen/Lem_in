@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 20:04:37 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/17 22:04:34 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/18 21:44:48 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ bool		error_mng(t_info *info, int err_nb, char *s)
 		ft_printf("Error: invalid link format.\n", s);
 	else if (err_nb == NO_PATH)
 		ft_printf("Error: there is no path at this farm.\n", s);
+	if (*s)
+		ft_strdel(&s);
 	// else
 	// 	return (1);
 	//clear leaks
+	while(1);
 	exit(EXIT_FAILURE);
 	return (FALSE);
 }
@@ -78,13 +81,20 @@ void	before_start(t_info *info, t_list **begin)
 void	graph_and_co(t_info *info, t_rm_list **table)
 {
 	t_pth	**pth;
+	t_list	*ptr31;
+	int		i;
 
 	bfs_path(info, info->table);
 	if (info->path_q == 0)
 		error_mng(info, NO_PATH, "");
-	transform_paths(info, info->paths, pth);
-	// free_ants(info, info->paths);
+	i = info->path_q;
+	count_real_pathes(info, info->paths);
+	pth = (t_pth**)malloc(sizeof(t_pth*) * (info->path_q));
+	transform_paths(info, info->paths, pth, ptr31);
 	free_ants(info, pth, info->pth_len, info->ants);
+	while (--info->path_q != -1)
+		free(pth[info->path_q]);
+	free(pth);
 }
 
 int		main(int argc, char **argv)
@@ -92,6 +102,7 @@ int		main(int argc, char **argv)
 	char	*first;
 	t_list	*begin;
 	t_info	info;
+	t_list  *ptr;
 
 	before_start(&info, &begin);
 	while (get_next_line(0, &first) > 0)
@@ -101,9 +112,9 @@ int		main(int argc, char **argv)
 			li_lst_push_back(&begin, ft_lstnew(first, 0));
 		else
 			error_mng(&info, NOT_OK, "");
-		// ft_strdel(&first);
 	}
 	graph_and_co(&info, info.table);
+	system("leaks lem-in");
 	// ft_putstr("\n");
 	// while (begin)
 	// {
@@ -130,6 +141,12 @@ int		main(int argc, char **argv)
 	// 	}
 	// 	info.rooms = info.rooms->next;
 	// }
-	
+	// int i = 0;
+	// while (info.table[i])
+	// {
+	// 	free(info.table[i]);
+	// 	i++;
+	// }
+	// free(info.table);
 	return (0);
 }

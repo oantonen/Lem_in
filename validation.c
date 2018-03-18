@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:59:53 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/17 16:07:03 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/18 21:16:54 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,13 @@ int		check_links(t_info *info, char *str)
 		info->r2 = info->table[hash(split[1])];
 	}
 	if (!info->r1)
-		error_mng(info, ROOM_NOT_FOUND, split[0]);
+		error_mng(info, ROOM_NOT_FOUND, ft_strdup(split[0]));
 	if (!info->r2)
-		error_mng(info, ROOM_NOT_FOUND, split[1]);
+		error_mng(info, ROOM_NOT_FOUND, ft_strdup(split[1]));
+	ft_strdel(&split[0]);
+	ft_strdel(&split[1]);
+	free(split);
+	split = NULL;
 	put_links(info->table, info->r1, info->r2);
 	return (TRUE);
 }
@@ -80,10 +84,13 @@ int		check_links(t_info *info, char *str)
 int		ant_check(t_info *info, char *str)
 {
 	int		i;
+	char	*for_itoa;
 
 	i = 0;
-	if (!ft_strequ(ft_itoa(ft_atoi(str)), str))
+	for_itoa = ft_itoa(ft_atoi(str));
+	if (!ft_strequ(for_itoa, str))
 		error_mng(info, INVALID_ANTS, "");
+	ft_strdel(&for_itoa);
 	if (ft_atoi(str) > 0 && info->isants == 0)
 	{
 		info->ants = ft_atoi(str);

@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 21:21:30 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/17 21:58:41 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/18 21:29:46 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 
 bool		room_check(t_info *info, char *str)
 {
-	char	**split;
-	t_data	*data;
+	char		**split;
+	t_data		*data;
+	char		*for_itoa;
+	t_rm_list	*ptr;
 
 	split = ft_strsplit(str, ' ');
-	if (!split[0] || !split[1] || !split[2])
+	if (!split[0] || !split[1] || !split[2] || str[0] == 'L' || str[0] == ' ')
 		error_mng(info, WRONG_ROOM_PROPERTIES, "");
-	if (str[0] == 'L' || str[0] == ' ')
-		error_mng(info, WRONG_ROOM_PROPERTIES, "");
-	if (!ft_strequ(ft_itoa(ft_atoi(split[1])), split[1]))
-		error_mng(info, WRONG_ROOM_PROPERTIES, "");
-	if (!ft_strequ(ft_itoa(ft_atoi(split[2])), split[2]))
-		error_mng(info, WRONG_ROOM_PROPERTIES, "");
+	for_itoa = ft_itoa(ft_atoi(split[1]));
+	if (!ft_strequ(for_itoa, split[1]))
+		error_mng(info, WRONG_ROOM_PROPERTIES, for_itoa);
+	ft_strdel(&for_itoa);
+	for_itoa = ft_itoa(ft_atoi(split[2]));
+	if (!ft_strequ(for_itoa, split[2]))
+		error_mng(info, WRONG_ROOM_PROPERTIES, for_itoa);
+	ft_strdel(&for_itoa);
 	data = create_data(split);
-	room_lst_push_back(&(info->rooms), room_lstnew(data), info);
+	ptr = room_lstnew(data);
+	room_lst_push_back(&(info->rooms), ptr, info);
 	if (info->isend == 1)
 	{
-		info->end = room_lstnew(data);
+		info->end = ptr;
 		info->isend = 2;
 	}
 	return (TRUE);
@@ -76,15 +81,23 @@ bool		hashcheck(t_info *info, char *str)
 bool		assign_start_end(t_info *info, char *str)
 {
 	t_data	*data;
+	char	**spl;
 
 	data = NULL;
 	if (hashcheck(info, str))
 		return (TRUE);
 	if (!hashcheck(info, str) && !ft_strchr(str, '-') && room_check(info, str))
 	{
-		data = create_data(ft_strsplit(str, ' '));
-		info->start = room_lstnew(data);
+		spl = ft_strsplit(str, ' ');
+		// data = create_data(spl);
+		// info->start = room_lstnew(data);
+		info->start = info->table[hash(spl[0])];
 		info->isstart = 2;
+		ft_strdel(&spl[0]);
+		ft_strdel(&spl[1]);
+		ft_strdel(&spl[2]);
+		free(spl);
+		spl = NULL;
 	}
 	else
 		error_mng(info, NO_START_ROOM, "");

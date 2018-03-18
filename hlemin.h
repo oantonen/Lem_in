@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 11:57:13 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/17 22:04:23 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/18 21:16:13 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	bfs_path(t_info *info, t_rm_list **table);
 void	sort_end_links(t_list **end);
 // void	free_ants(t_info *info, t_list **paths);
 void	free_ants(t_info *info, t_pth **pth, int *pth_len, int ants);
-void	transform_paths(t_info *info, t_list **paths, t_pth **pth);
+void	transform_paths(t_info *info, t_list **paths, t_pth **pth, t_list *ptr2);
+void	count_real_pathes(t_info *info, t_list **paths);
 
 #endif
