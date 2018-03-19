@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:03:32 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/18 21:29:47 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/18 23:03:34 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 t_data		*create_data(char **split)
 {
 	t_data	*data;
+	int		i;
 
+	i = 0;
 	data = (t_data*)malloc(sizeof(t_data));
 	data->name = ft_strdup(split[0]);
 	data->x = ft_atoi(split[1]);
@@ -23,11 +25,13 @@ t_data		*create_data(char **split)
 	data->lvl = -1;
 	data->h = hash(split[0]);
 	data->link = NULL;
-	ft_strdel(&split[0]);
-	ft_strdel(&split[1]);
-	ft_strdel(&split[2]);
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
 	free(split);
-	split = NULL;
 	return (data);
 }
 
