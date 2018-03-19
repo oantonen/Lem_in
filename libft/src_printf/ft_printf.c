@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 18:35:16 by oantonen          #+#    #+#             */
-/*   Updated: 2018/01/19 13:27:29 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/19 22:18:13 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		ft_printf(const char *arg, ...)
 	int			printf_len;
 	char		*flags;
 
-	super_str = ft_strnew(1000000);
+	super_str = ft_strnew(1000);
 	flags = " -+#*hlL$jz\'.01234567890";
 	va_start(ap, arg);
 	super_str = browse_arg((char*)arg, ap, flags, super_str);

@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:59:53 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 12:10:35 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/19 22:27:48 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	put_room_to_table(t_rm_list **table, t_rm_list *new)
 		table[i] = new;
 	else if (table[i])
 	{
-		dprintf(2, "\n------colision------\n");//
 		while (table[i]->same_h)
 			table[i] = table[i]->same_h;
 		table[i]->same_h = new;

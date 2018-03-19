@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 19:18:09 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 20:25:46 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/19 21:19:01 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	ant_move(t_pth *pth, int pth_len, int *end_room, int curr)
 		{
 			pth[i + 1].ant = pth[i].ant;
 			ft_printf("L%d-%s ", pth[i].ant, pth[i + 1].name);
-			if (i != 0)
-				pth[i].ant = pth[i - 1].ant;
+			pth[i].ant = pth[i - 1].ant;
 		}
 		else if (pth[i].ant != 0 && i == pth_len - 2)
 		{
@@ -34,11 +33,11 @@ void	ant_move(t_pth *pth, int pth_len, int *end_room, int curr)
 		}
 		i--;
 	}
+	pth[0].ant = curr;
 	if (curr)
-	{
-		pth[0].ant = curr;
 		ft_printf("\e[38;5;196mL%d-%s\e[m ", curr, pth[0].name);
-	}
+	if (pth_len == 1 && curr)
+		*end_room += 1;
 }
 
 int		count_current_paths(int path_q, int *pth_len, int ants)

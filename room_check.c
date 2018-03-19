@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 21:21:30 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 14:10:29 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/19 22:12:07 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool		room_check(t_info *info, char *str)
 
 	split = ft_strsplit(str, ' ');
 	if (!split[0] || !split[1] || !split[2] || str[0] == 'L' || str[0] == ' '\
-	 || split[3] != NULL)
+	|| split[3] != NULL)
 		error_mng(info, WRONG_ROOM_PROPERTIES, "");
 	for_itoa = ft_itoa(ft_atoi(split[1]));
 	if (!ft_strequ(for_itoa, split[1]))
@@ -79,17 +79,13 @@ bool		hashcheck(t_info *info, char *str)
 
 bool		assign_start_end(t_info *info, char *str)
 {
-	t_data	*data;
 	char	**spl;
 
-	data = NULL;
 	if (hashcheck(info, str))
 		return (TRUE);
 	if (!hashcheck(info, str) && !ft_strchr(str, '-') && room_check(info, str))
 	{
 		spl = ft_strsplit(str, ' ');
-		// data = create_data(spl);
-		// info->start = room_lstnew(data);
 		info->start = info->table[hash(spl[0])];
 		info->isstart = 2;
 		ft_strdel(&spl[0]);
