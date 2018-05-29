@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/28 11:57:13 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 22:10:10 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/20 19:31:11 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define HLEMIN_H
 
 # include "hprintf.h"
-# include <stdio.h> ////
 # include <stdbool.h>
 
 typedef enum			e_type
@@ -101,5 +100,8 @@ void					count_real_pathes(t_info *info, t_list **paths);
 void					free_ants(t_info *info, t_pth **pth, int *pth_len,\
 	int ants);
 void					print_usage(t_info *info);
+void					print_req(t_info *info);
+void					print_paths(t_info *info, t_pth **pth, int *pth_len, \
+	int path_q);
 
 #endif

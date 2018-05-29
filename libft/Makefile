@@ -22,7 +22,7 @@ OBJS := $(SRCS:.c=.o)
 
 HEADERS := ./includes
 
-CFLAGS := -Wall -Wextra -Werror -I $(HEADERS)
+CFLAGS := -Wall -Wextra -Werror 
 
 all: $(NAME) 
 
@@ -31,12 +31,13 @@ $(NAME): $(OBJS)
 	@echo "Lib is ready, my Lord"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $< -I $(HEADERS)
 
 clean:
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
+	@echo "Clearing all"
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 20:04:37 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 22:31:31 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/20 19:38:06 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 void	before_start(t_info *info, t_list **begin, char **argv)
 {
-	if (argv[1] && ft_strequ(argv[1], "-h"))
+	if (argv[1] && ft_strequ(argv[1], "-hh"))
+		print_req(info);
+	else if ((argv[1] && ft_strequ(argv[1], "-h")) || (!ft_strequ(argv[1], \
+		"-hh") && !ft_strequ(argv[1], "-q") && !ft_strequ(argv[1], "-p") \
+		&& !ft_strequ(argv[1], "-d")))
 		print_usage(info);
 	*info = INITIALIZE;
 	info->argv = argv;
@@ -37,15 +41,17 @@ void	graph_and_co(t_info *info, t_rm_list **table, t_list *begin)
 	count_real_pathes(info, info->paths);
 	pth = (t_pth**)malloc(sizeof(t_pth*) * (info->path_q));
 	transform_paths(info, info->paths, pth, ptr31);
-	while (begin)
-	{
-		ft_printf("%s\n", begin->content);
-		free(begin->content);
-		ptr = begin;
-		begin = begin->next;
-		free(ptr);
-	}
+	if (!info->argv[1] || !ft_strequ(info->argv[1], "-q"))
+		while (begin)
+		{
+			ft_printf("\e[38;5;158m%s\e[m\n", begin->content);
+			free(begin->content);
+			ptr = begin;
+			begin = begin->next;
+			free(ptr);
+		}
 	ft_putstr("\n");
+	print_paths(info, pth, info->pth_len, info->path_q);
 	free_ants(info, pth, info->pth_len, info->ants);
 	while (--info->path_q != -1)
 		free(pth[info->path_q]);
@@ -64,8 +70,10 @@ int		main(int argc, char **argv)
 	{
 		if (check_line(&info, first) == 1)
 			li_lst_push_back(&begin, ft_lstnew(first, 0));
-		else
+		else if (!check_line(&info, first) && !info.only_links)
 			error_mng(&info, NOT_OK, "");
+		else if (check_line(&info, first) == 0)
+			break ;
 	}
 	if (info.only_links == 0)
 		error_mng(&info, NOT_OK, "");

@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/11 23:20:03 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 22:03:48 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/20 16:02:14 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,10 @@ void	count_paths(t_info *info, t_rm_list *end, int i)
 	{
 		new = NULL;
 		if (ptr->content_size != 0 && save_paths(info, ptr, &new))
-		{ 
+		{
 			li_lst_push_back(&new, ft_lstnew((info->end->d), 0));
 			info->paths[i++] = new;
 		}
-		// dprintf(2, "save_paths | name=%s\n", ((t_data*)ptr->content)->name);
-		// dprintf(2, "save_paths | size=%zu\n", ptr->content_size);
 		ptr = ptr->next;
 	}
 }

@@ -11,20 +11,23 @@ CFLAGS := -Wall -Wextra -Werror -I $(HEADERS)
 
 LIBFT := libft/libftprintf.a
 
-all: $(NAME)
+all: create_lib $(NAME)
+
+create_lib: 
+	@make -C libft
 
 $(NAME): $(OBJ)
 	@gcc -o $(NAME) $(OBJ) $(LIBFT)
-	@echo "Here is lem-in :)"
+	@echo "\033[1;32mHere is lem-in :P"
 
 %.o: %.c
 	@$(CC) -c -I$(LIBHEAD) -o $@ $<
 
 clean:
-	rm -rf $(OBJ)
+	@rm -rf $(OBJ)
 
 fclean: clean
 	@rm -rf $(NAME)
-	#@make fclean -C libft
+	@make fclean -C libft
 
 re: fclean all

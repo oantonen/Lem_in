@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/06 23:03:32 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/18 23:03:34 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/20 19:24:02 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void		room_lst_push_back(t_rm_list **begin, t_rm_list *new, t_info *info)
 				room_check2(info, ptr->d, new->d);
 				ptr = ptr->next;
 			}
+			room_check2(info, ptr->d, new->d);
 			ptr->next = new;
 		}
 	}

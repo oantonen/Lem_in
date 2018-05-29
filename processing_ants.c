@@ -6,24 +6,11 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 14:12:40 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 20:09:06 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/20 18:59:47 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hlemin.h"
-
-// void	show_arr(t_pth *arr, int len)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		dprintf(2, "arr_name=%s\n", arr[i].name);
-// 		dprintf(2, "arr_ant=%d\n", arr[i].ant);
-// 		i++;
-// 	}
-// }
 
 void	count_real_pathes(t_info *info, t_list **paths)
 {
@@ -82,5 +69,5 @@ void	transform_paths(t_info *info, t_list **paths, t_pth **pth, t_list *ptr2)
 				free(ptr2);
 			}
 		}
-	}	// show_arr(pth[0], info->pth_len[0]);
+	}
 }

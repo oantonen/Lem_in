@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/02 15:59:53 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 22:27:48 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/20 20:11:09 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,12 @@ int		ant_check(t_info *info, char *str)
 
 int		check_line(t_info *info, char *str)
 {
-	if (*str == '\0')
-		error_mng(info, EMPTY_LINE, "");
-	else if (info->isstart == 1)
+	if (info->isstart == 1)
 		return (assign_start_end(info, str));
 	else if (str[0] != '#' && info->isants == 0 && ant_check(info, str))
 		return (TRUE);
 	else if (str[0] == '#' && hashcheck(info, str))
 		return (TRUE);
-	else if (info->only_links && !ft_strchr(str, '-'))
-		error_mng(info, INVALID_LINK, "");
 	else if (!info->only_links && !ft_strchr(str, '-') && room_check(info, str))
 		return (TRUE);
 	else if (ft_strchr(str, '-') && check_links(info, str))

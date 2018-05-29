@@ -6,7 +6,7 @@
 /*   By: oantonen <oantonen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 21:58:44 by oantonen          #+#    #+#             */
-/*   Updated: 2018/03/19 22:26:29 by oantonen         ###   ########.fr       */
+/*   Updated: 2018/03/20 20:30:51 by oantonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,22 @@ unsigned	hash(char *str)
 
 void		print_usage(t_info *info)
 {
-	ft_putendl("usage:\n");
+	ft_putendl("usage: ./lem-in [-flag] < [map_file]");
+	ft_putendl("\t[-d] - debug option - detailed error output");
+	ft_putendl("\t[-p] - print found paths");
+	ft_putendl("\t[-q] - quiet mode - ant farm is hidden");
+	ft_putendl("\t[-hh] - show map requirements");
+	exit(0);
+}
+
+void		print_req(t_info *info)
+{
+	ft_putendl("Map requirements: \n");
 	ft_putendl(" - You should make an input in the following format:");
 	ft_putendl("\tnumber_of_ants\n\tthe_rooms\n\tthe_links");
 	ft_putendl(" - Number of ants must be positive integer up to MAX_INT.");
-	ft_putendl(" - The rooms line must have unique name and 2 coordinates \
-separeted by 'space'.");
+	ft_putendl(" - The rooms line must have unique name and 2 positive \
+coordinates separeted by 'space'.");
 	ft_putendl(" - In the room's name it isn't alowed to use '-', 'L', '#'.");
 	ft_putendl(" - Rooms must have start && end rooms, which can be \
 distinguished by commands '##start', '##end' .");
